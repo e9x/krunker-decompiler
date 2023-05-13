@@ -9,7 +9,7 @@ import { analyze } from "eslint-scope";
 import MersenneTwister from "mersenne-twister";
 import { pascalCase } from "pascal-case";
 
-const iiiiiii = /(?:i|[^\sa-z0-9]){4,}$/i;
+const iiiiiii = /(?:i|[^\sa-z0-9]){4,}$|_0x[a-zA-Z0-9]{6}/i;
 
 function getVarPrefix(type: ESLintScope.DefinitionType["type"]) {
   switch (type) {
