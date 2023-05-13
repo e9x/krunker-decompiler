@@ -1,16 +1,26 @@
 import "source-map-support/register.js";
 import { processedDir, unpackedDir } from "./consts.js";
 import { processCode } from "./processWorker.js";
-import { mkdir, opendir } from "node:fs/promises";
+import { mkdir, opendir, readFile } from "node:fs/promises";
 import { join, parse } from "node:path";
 import { argv, exit, stdout } from "node:process";
 import P from "piscina";
 import prettyMilliseconds from "pretty-ms";
 import { rimraf } from "rimraf";
 
-const [, , code] = argv;
+const [, , file] = argv;
 
-if (code) {
+if (file) {
+  let code: string;
+
+  try {
+    // try reading it as a file
+    code = await readFile(file, "utf-8");
+  } catch {
+    // use it as code
+    code = file;
+  }
+
   const parsed = processCode(code);
   stdout.write(parsed);
   stdout.end();
