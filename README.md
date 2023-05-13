@@ -1,5 +1,7 @@
 # Krunker Decompiler
 
+[See an example](https://gist.github.com/e9x/eea9ecb2c0ce6fe0517ff522e78d282a)
+
 Powered by:
 
 - [webcrack](https://github.com/j4k0xb/webcrack) (current)
