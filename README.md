@@ -49,7 +49,7 @@ npm run build
 3. Deobfuscate the source
 
    ```sh
-   npm run deobfuscate ../krunker.MM.DD.YY.js
+   npm run deobfuscate ../krunker.js
    ```
 
 4. Unpack the webpack modules
