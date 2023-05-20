@@ -115,3 +115,32 @@ Because the source is wrapped in a way that the decompiler doesn't understand, y
    ```
 
 4. Save
+
+## How to find the Webpack entry point (aka `theatre.js`)
+
+1. Open `deobfuscated.js` in an editor capable of handling an 8 MB file
+   Like VS Code.
+
+   If you haven't already, you'll need to deobfuscate the source first.
+
+   This file is found in the `krunker-decompiler` folder.
+
+2. Scroll down until you find something that looks like this:
+
+   ```js
+   iíîîîiî.p = "";
+   return iíîîîiî(iíîîîiî.s = 308);
+   ```
+
+   This should be around line 70.
+
+   Sometimes the symbols (`iíîîîiî`) won't be the same, and neither will the number `308`. Whatever is in the place of `308` is the entry module ID.
+
+3. Locate the processed file based on the ID.
+
+   If you haven't already, you'll need to unpack and process the source.
+
+   Look in the processed folder and either search for or scroll down to a file with the name:
+   `[entry module id].js`
+
+   `[entry module id]` being the ID you just found.
