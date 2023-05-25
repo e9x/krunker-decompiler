@@ -1,6 +1,11 @@
 import { isIdentifierName } from "@babel/helper-validator-identifier";
 import escodegen from "@javascript-obfuscator/escodegen";
-import { namedTypes as n, builders as b, visit } from "ast-types";
+import {
+  namedTypes as n,
+  builders as b,
+  visit,
+  astNodesAreEquivalent,
+} from "ast-types";
 
 // Expressions when the binary expression is doing the opposite
 const oppositeExpressions = {
@@ -47,6 +52,33 @@ export default function decompile(program: n.Program) {
   */
 
   visit(program, {
+    // String.fromCharCode(1, 2, 3, 4)
+    visitCallExpression(path) {
+      if (
+        astNodesAreEquivalent(
+          path.node.callee,
+          b.memberExpression(
+            b.identifier("String"),
+            b.identifier("fromCharCode")
+          )
+        ) &&
+        path.node.arguments.every(
+          (arg) => n.Literal.check(arg) && typeof arg.value === "number"
+        )
+      ) {
+        path.replace(
+          b.literal(
+            String.fromCharCode(
+              ...path.node.arguments.map(
+                (arg) => (arg as n.Literal).value as number
+              )
+            )
+          )
+        );
+
+        return false;
+      } else this.traverse(path);
+    },
     visitVariableDeclaration(path) {
       if (
         path.node.declarations.length !== 1 &&
