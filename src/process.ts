@@ -1,14 +1,14 @@
 import "source-map-support/register.js";
 import { processedDir, unpackedDir } from "./consts.js";
 import { processCode } from "./processWorker.js";
-import { mkdir, opendir, readFile } from "node:fs/promises";
+import { mkdir, opendir, writeFile, readFile } from "node:fs/promises";
 import { join, parse } from "node:path";
 import { argv, exit, stdout } from "node:process";
 import P from "piscina";
 import prettyMilliseconds from "pretty-ms";
 import { rimraf } from "rimraf";
 
-const [, , file] = argv;
+const [, , file, output] = argv;
 
 if (file) {
   let code: string;
@@ -22,8 +22,14 @@ if (file) {
   }
 
   const parsed = processCode(code);
-  stdout.write(parsed);
-  stdout.end();
+
+  if (output) {
+    await writeFile(output, parsed);
+  } else {
+    stdout.write(parsed);
+    stdout.end();
+  }
+
   exit();
 }
 
