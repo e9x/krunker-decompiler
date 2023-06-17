@@ -118,13 +118,19 @@ Because the source is wrapped in a way that the decompiler doesn't understand, y
 
 ## How to find the Webpack entry point (aka `theatre.js`)
 
-1.  Deobfuscate the source (if you haven't already)
+1.  Build the program (if you haven't already)
+
+    ```sh
+    npm run build
+    ```
+
+2.  Deobfuscate the source (if you haven't already)
 
     ```sh
     npm run deobfuscate ../krunker.js
     ```
 
-2.  Run the locate entry script
+3.  Run the locate entry script
 
     ```sh
     npm run locateEntry
@@ -136,3 +142,29 @@ Because the source is wrapped in a way that the decompiler doesn't understand, y
     This is the ID of the entry point module. The modules can be obtained by running the decompiling steps above.
 
     So for this example, the entry point script would be named `NUMBER.js`.
+
+## How to decompile other files (Not webpack)
+
+This tool can be used against other scripts that aren't bundled with Webpack. For example, you might want to use this to rename variables or deobfuscate code in a script.
+
+1.  Build the program (if you haven't already)
+
+    ```sh
+    npm run build
+    ```
+
+2.  Run the processCode script
+
+    ```sh
+    npm run processCode "function _0x1e3586(x,y){return x+y}exports.test = _0x1e3586;"
+    ```
+
+    Ideally, the output should go to a file.
+
+    ```sh
+    npm run processCode "..." output.js
+    ```
+
+    See output.js in the folder.
+
+For additional usage, run `npm run processCode` without any parameters.

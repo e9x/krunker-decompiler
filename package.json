@@ -11,6 +11,7 @@
     "locateEntry": "node dist/locateEntry.js",
     "unpack": "node dist/unpack.js",
     "process": "node dist/process.js",
+    "processCode": "node dist/processCode.js",
     "rename": "node dist/rename.js",
     "build": "tsc",
     "watch": "tsc -w"
