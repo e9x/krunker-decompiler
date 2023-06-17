@@ -7,7 +7,7 @@ import { webcrack } from "webcrack";
 const [, , script] = argv;
 let code = await readFile(script, "utf-8");
 
-code = (await webcrack(code)).code;
+({ code } = await webcrack(code));
 
 console.log("Writing deobfuscated");
 
