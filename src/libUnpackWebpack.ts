@@ -7,11 +7,7 @@ interface DecompiledSource {
   code: string;
 }
 
-export default async function unpackWebpack(code: string) {
-  const program = parse(code, { ecmaVersion: "latest" });
-
-  if (!n.Program.check(program)) return;
-
+export function findWebpackLoader(program: n.Program) {
   // older builds
   if (
     n.ExpressionStatement.check(program.body[0]) &&
@@ -28,11 +24,24 @@ export default async function unpackWebpack(code: string) {
       n.FunctionExpression.check(e.expression.callee)
   );
 
-  if (!webpackLoader) throw new TypeError("No loader");
+  if (!webpackLoader) return;
 
   if (!n.ExpressionStatement.assert(webpackLoader)) return;
   if (!n.CallExpression.assert(webpackLoader.expression)) return;
   if (!n.FunctionExpression.assert(webpackLoader.expression.callee)) return;
+
+  return webpackLoader as n.ExpressionStatement & {
+    expression: n.CallExpression & { callee: n.FunctionExpression };
+  };
+}
+
+export default async function unpackWebpack(code: string) {
+  const program = parse(code, { ecmaVersion: "latest" });
+
+  if (!n.Program.check(program)) return;
+
+  const webpackLoader = findWebpackLoader(program);
+  if (!webpackLoader) throw new TypeError("No loader");
 
   const modules = webpackLoader.expression.arguments[0];
 

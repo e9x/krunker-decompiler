@@ -8,6 +8,7 @@
   "scripts": {
     "fetchSocial": "node dist/fetchSocial.js",
     "deobfuscate": "node dist/deobfuscate.js",
+    "locateEntry": "node dist/locateEntry.js",
     "unpack": "node dist/unpack.js",
     "process": "node dist/process.js",
     "rename": "node dist/rename.js",
