@@ -121,6 +121,7 @@ Because the source is wrapped in a way that the decompiler doesn't understand, y
 1.  Build the program (if you haven't already)
 
     ```sh
+    npm install
     npm run build
     ```
 
@@ -150,6 +151,7 @@ This tool can be used against other scripts that aren't bundled with Webpack. Fo
 1.  Build the program (if you haven't already)
 
     ```sh
+    npm install
     npm run build
     ```
 
