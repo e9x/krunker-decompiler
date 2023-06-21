@@ -50,5 +50,5 @@ const parsed = processCode(code);
 if (output) {
   await writeFile(output, parsed);
 } else {
-  console.log(output);
+  console.log(parsed);
 }
