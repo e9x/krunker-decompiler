@@ -4,8 +4,7 @@
 
 Powered by:
 
-- [webcrack](https://github.com/j4k0xb/webcrack) (current)
-- [synchrony](https://github.com/relative/synchrony) (variable renaming)
+- [webcrack](https://github.com/j4k0xb/webcrack)
 
 ## Quickstart
 
