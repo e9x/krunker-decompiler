@@ -13,6 +13,7 @@ import { join, parse } from "node:path";
 export function processCode(code: string) {
   let program = parseScript(code, {
     ecmaVersion: "latest",
+    allowReturnOutsideFunction: true,
   }) as n.Node as n.Program;
 
   decompile(program);
@@ -23,6 +24,7 @@ export function processCode(code: string) {
   program = parseScript(code, {
     ecmaVersion: "latest",
     ranges: true,
+    allowReturnOutsideFunction: true,
   }) as n.Node as n.Program;
 
   const hash = crc32.str(code);
