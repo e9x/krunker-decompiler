@@ -2,9 +2,7 @@
 
 [See an example](https://gist.github.com/e9x/eea9ecb2c0ce6fe0517ff522e78d282a)
 
-Powered by:
-
-- [webcrack](https://github.com/j4k0xb/webcrack)
+Powered by [webcrack](https://github.com/j4k0xb/webcrack)
 
 ## Quickstart
 
@@ -47,19 +45,13 @@ npm run build
 
 3. Deobfuscate the source
 
+   This will deobfuscate the soruce and split each module into an individual file.
+
    ```sh
    npm run deobfuscate ../krunker.js
    ```
 
-4. Unpack the webpack modules
-
-   This will split each module into an individual file.
-
-   ```sh
-   npm run unpack
-   ```
-
-5. Process the modules
+4. Process the modules
 
    This will undo all minifications to the source and rename the variables.
 
@@ -67,15 +59,7 @@ npm run build
    npm run process
    ```
 
-6. Rename the modules.
-
-   This will rename JSON modules to .json files. In the future, this will assign the modules to their correct names.
-
-   ```
-   npm run rename
-   ```
-
-You can find the result in the `rename` directory.
+You can find the result in the `processed` directory.
 
 ## Get the game source (Chromium)
 
@@ -115,35 +99,11 @@ Because the source is wrapped in a way that the decompiler doesn't understand, y
 
 4. Save
 
-## How to find the Webpack entry point (aka `theatre.js`)
+## How to find the Webpack entry point
 
-1.  Build the program (if you haven't already)
+Entry point is named `index.js` in the processed folder.
 
-    ```sh
-    npm install
-    npm run build
-    ```
-
-2.  Deobfuscate the source (if you haven't already)
-
-    ```sh
-    npm run deobfuscate ../krunker.js
-    ```
-
-3.  Run the locate entry script
-
-    ```sh
-    npm run locateEntry
-    ```
-
-    This will output "Entry point module ID: NUMBER"
-    NUMBER being a literal number.
-
-    This is the ID of the entry point module. The modules can be obtained by running the decompiling steps above.
-
-    So for this example, the entry point script would be named `NUMBER.js`.
-
-## How to decompile other files (Not webpack)
+## How to decompile other files (Not Krunker/Webpack)
 
 This tool can be used against other scripts that aren't bundled with Webpack. For example, you might want to use this to rename variables or deobfuscate code in a script.
 

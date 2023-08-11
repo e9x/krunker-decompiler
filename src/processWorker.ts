@@ -2,7 +2,6 @@ import "source-map-support/register.js";
 import { processedDir } from "./consts.js";
 import decompile from "./libDecompile.js";
 import renameVars from "./libRenameVars.js";
-import toCommonJS from "./libToCommonJS.js";
 import escodegen from "@javascript-obfuscator/escodegen";
 import { parse as parseScript } from "acorn";
 import type { namedTypes as n } from "ast-types";
@@ -14,10 +13,10 @@ export function processCode(code: string) {
   let program = parseScript(code, {
     ecmaVersion: "latest",
     allowReturnOutsideFunction: true,
+    allowImportExportEverywhere: true,
   }) as n.Node as n.Program;
 
   decompile(program);
-  toCommonJS(program);
 
   code = escodegen.generate(program);
 
@@ -25,6 +24,7 @@ export function processCode(code: string) {
     ecmaVersion: "latest",
     ranges: true,
     allowReturnOutsideFunction: true,
+    allowImportExportEverywhere: true,
   }) as n.Node as n.Program;
 
   const hash = crc32.str(code);

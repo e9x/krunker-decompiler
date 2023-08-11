@@ -317,7 +317,10 @@ function generateName(
 export default function renameVars(program: n.Program, hash: number) {
   const mt = new MersenneTwister(hash);
 
-  const scopeManger = analyze(program);
+  const scopeManger = analyze(program, {
+    ecmaVersion: 6,
+    sourceType: "module",
+  });
 
   // first def, new name
   const renamedNodes = new WeakMap<object, string>();
