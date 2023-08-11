@@ -52,27 +52,33 @@ export default function decompile(program: n.Program) {
   */
 
   visit(program, {
-    // String.fromCharCode(1, 2, 3, 4)
+    // String.fromCharCode(1, 2, 3, 4).toLowerCase()
     visitCallExpression(path) {
       if (
+        n.MemberExpression.check(path.node.callee) &&
+        n.CallExpression.check(path.node.callee.object) &&
         astNodesAreEquivalent(
-          path.node.callee,
+          path.node.callee.object.callee,
           b.memberExpression(
             b.identifier("String"),
             b.identifier("fromCharCode")
           )
         ) &&
-        path.node.arguments.every(
+        path.node.callee.object.arguments.every(
           (arg) => n.Literal.check(arg) && typeof arg.value === "number"
+        ) &&
+        astNodesAreEquivalent(
+          b.identifier("toLowerCase"),
+          path.node.callee.property
         )
       ) {
         path.replace(
           b.literal(
             String.fromCharCode(
-              ...path.node.arguments.map(
+              ...path.node.callee.object.arguments.map(
                 (arg) => (arg as n.Literal).value as number
               )
-            )
+            ).toLowerCase()
           )
         );
 
